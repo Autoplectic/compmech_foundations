@@ -2,6 +2,7 @@
 *.acr
 *.alg
 *.aux
+*.auxlock
 *.bbl
 *.blg
 *.dvi
@@ -30,3 +31,6 @@
 *.vrb
 *.xdy
 *.tdo
+*Notes.bib
+compmech_foundations.pdf
+
