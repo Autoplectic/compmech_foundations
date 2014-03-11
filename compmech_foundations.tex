@@ -76,6 +76,21 @@ The (left) quotient of a process \Process is defined to be $\overleftarrow{w} \P
 
 We are thinking that we want $\mu_{\overleftarrow{w}}$ to be something like the sum over states we can be in after having seen $\overleftarrow{w}$ of the probability of seeing $\overrightarrow{x}$ from that state} times the probability of being in that state.  We'll need to make sure this is actually a measure, and we want this quotient to include the data of both the support as well as a probability distribution.  
 
+A given language \Language has a set of quotients.  One way of defining a regular language is that the language has a finite set of quotients.  The atoms of a language are defined to be the intersections of all the (either) quotients or complements of the quotients in $\Sigma^{\start}$.  
+
+Difference between language and process: if there are a finite number of left quotients, then there are a finite number or right quotients (this comes from the reverse of a regular language being regular, seen from reversing DFA).  Not true for processes, since the reverse of a unifilar (stationary, recurrent, blah blah blah) HMM is not necessarily unifilar and making it unifilar might make it infinite. Example: INSERT.  
+
+*STATE MORPHS (i.e. right language of state)
+
+(left) Quotients translate to (future) morphs. (right) Quotients correspond to (past) morphs.  We need to figure out what intersection means for morphs.  We can construct the atoms directly to determine this.  Recall, one way of constructing atoms for a language \Language is to reverse the minimal DFA of $\Language^{R}$.  The atoms are then the right languages of the states. We can do the analogous process for processes where we reverse the epsilon-machine of the reverse process, and look at the future morphs of the states of that "etomata" (a typically non-unifilar HMM).
+
+We want something like intersections, but over distributions of future morphs.  We know the future morphs, and the atoms.  Now we need to determine the operator to get from A to B.  
+
+Define Reverse Process: (limiting set of word probabilities - def, reverse the words at each step) would be nice to define directly on subshift. hoping that shift invariance of measure means we don't care where we flip it, all words should be in it.  We want to match up with the process that reversing the epsilon machine representation of a given process spits out. [see Nick Travers]
+
+Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E, know co-unifilar)
+
+**Gac's-Korner information, mutual information is not a random variable 
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
