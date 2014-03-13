@@ -63,6 +63,11 @@ We make rigorous the extension of formal language theory to processes and furthe
 
 \maketitle
 
+Goals:
+\begin{enumerate}
+  \item What are the atoms of a process?
+  \item conjecture: $h_\mu$ can be calculated in closed form from any atomic presention, e.g. $h_\mu = \sum \pi_i \H{\textrm{future morph}_i}$.
+\end{enumerate}
 
 \section{Notes}
 Formal language theory utilizes the notions of (left) quotients, (right) quotients, right languages, and left languages to characterize languages.  Our goal is to rigorously define analogous concepts in the realm of processes.  A language \Language is defined to be a subset of the free monoid $\Sigma^{\star}$on an alphabet $\Sigma$. The (left) quotient of a language \Language for a word $w$ is defined to be $w^{-1}\Language = \{ x | wx \in \Language \}$. 
@@ -71,12 +76,12 @@ A process \Process is defined to be $\{\subseteq \Sigma^{\mathbb{Z}}, \mu\}$ whe
 
 Our working definitions are as follows: 
 
-The (left) quotient of a process \Process is defined to be $\overleftarrow{w} \Process 
-= \{ \{\overrightarrow{x}, \mu_{\overleftarrow{w}} \} | \mu(\overleftarrow{w}\overrightarrow{x}) \neq 0 \}$. 
+The (left) quotient of a process \Process is defined to be $\leftword \Process 
+= \{ \{ \rightword, \mu_{\leftword} \} | \mu(\leftword \rightword) \neq 0 \}$. 
 
-We are thinking that we want $\mu_{\overleftarrow{w}}$ to be something like the sum over states we can be in after having seen $\overleftarrow{w}$ of the probability of seeing $\overrightarrow{x}$ from that state} times the probability of being in that state.  We'll need to make sure this is actually a measure, and we want this quotient to include the data of both the support as well as a probability distribution.  
+We are thinking that we want $\mu_{\leftword}$ to be something like the sum over states we can be in after having seen $\leftword$ of the probability of seeing $\rightword$ from that state times the probability of being in that state.  We'll need to make sure this is actually a measure, and we want this quotient to include the data of both the support as well as a probability distribution.  
 
-A given language \Language has a set of quotients.  One way of defining a regular language is that the language has a finite set of quotients.  The atoms of a language are defined to be the intersections of all the (either) quotients or complements of the quotients in $\Sigma^{\start}$.  
+A given language \Language has a set of quotients.  One way of defining a regular language is that the language has a finite set of quotients.  The atoms of a language are defined to be the intersections of all the (either) quotients or complements of the quotients in $\Sigma^{\star}$.  
 
 Difference between language and process: if there are a finite number of left quotients, then there are a finite number or right quotients (this comes from the reverse of a regular language being regular, seen from reversing DFA).  Not true for processes, since the reverse of a unifilar (stationary, recurrent, blah blah blah) HMM is not necessarily unifilar and making it unifilar might make it infinite. Example: INSERT.  
 
@@ -88,7 +93,7 @@ We want something like intersections, but over distributions of future morphs.  
 
 Define Reverse Process: (limiting set of word probabilities - def, reverse the words at each step) would be nice to define directly on subshift. hoping that shift invariance of measure means we don't care where we flip it, all words should be in it.  We want to match up with the process that reversing the epsilon machine representation of a given process spits out. [see Nick Travers]
 
-Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E, know co-unifilar) If our "stomata" is co-unifilar, then we get all these nice things.  
+Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E$, know co-unifilar) If our ``$\epsilon$tomata'' is co-unifilar, then we get all these nice things.  
 
 **Gac's-Korner information, mutual information is not a random variable 
 
