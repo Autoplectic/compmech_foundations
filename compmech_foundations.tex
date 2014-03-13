@@ -67,6 +67,10 @@ Goals:
 \begin{enumerate}
   \item What are the atoms of a process?
   \item conjecture: $h_\mu$ can be calculated in closed form from any atomic presention, e.g. $h_\mu = \sum \pi_i \H{\textrm{future morph}_i}$.
+  \item formally define the \etomata
+  \item define the ``regular'' processes: those with a finite number of future morphs
+  \item define co-regular processes
+  \item if \etomata is unifilar, is it isomorphic to the \emachine?
 \end{enumerate}
 
 \section{Notes}
@@ -93,7 +97,7 @@ We want something like intersections, but over distributions of future morphs.  
 
 Define Reverse Process: (limiting set of word probabilities - def, reverse the words at each step) would be nice to define directly on subshift. hoping that shift invariance of measure means we don't care where we flip it, all words should be in it.  We want to match up with the process that reversing the epsilon machine representation of a given process spits out. [see Nick Travers]
 
-Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E$, know co-unifilar) If our ``$\epsilon$tomata'' is co-unifilar, then we get all these nice things.  
+Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E$, know co-unifilar) If our ``\etomata'' is co-unifilar, then we get all these nice things.  
 
 **Gac's-Korner information, mutual information is not a random variable 
 
