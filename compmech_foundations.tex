@@ -101,7 +101,7 @@ Define Reverse Process: (limiting set of word probabilities - def, reverse the w
 
 Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E$, know co-unifilar) If our ``\etomata'' is co-unifilar, then we get all these nice things.  
 
-**Gac's-Korner information, mutual information is not a random variable 
+**Gac's-Korner information, mutual information is not a random variable; can't take intersection of two sigma algebras and take entropy (this results in the common information K) which is less than the mutual information. in set theory, this works correctly. not in information theory.  
 
 TO GET ETOMATA OF PROCESS:
 1) Start with epsilon machine
@@ -109,6 +109,8 @@ TO GET ETOMATA OF PROCESS:
 3) Mixed State (i.e. determinize, unifilarize)
 4) Reverse (in general, loose unifilarity)
 
+Future Morphs of a Process:
+Ryan: Conditional distribution; conditioned on a past $\leftword$ having occurred, this is the distribution over futures $\{ \rightword\}$.  
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
