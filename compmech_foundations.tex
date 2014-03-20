@@ -73,6 +73,7 @@ Goals:
   \item if \etomata is unifilar, is it isomorphic to the \emachine?
   \item is the reverse of a co-unifilar \emachine the \emachine for the reverse process?
   \item define ``(future) state morphs'', the future morph generated from a state.
+  \item relate to Krohn-Rhodes
 \end{enumerate}
 
 \section{Notes}
@@ -113,6 +114,16 @@ Future Morphs of a Process:
 Ryan: Conditional distribution; conditioned on a past $\leftword$ having occurred, this is the distribution over futures $\{ \rightword\}$.  
 How do we compute this conditional distribution for a given process, or presentation of a process? 
 Let's find a reference to see how they compute conditional distributions over bi-infinite strings.
+
+It has been shown that if $D$ is a minimal DFA of \Language, then the right language of every state of $D$ is a quotient of \Language.  When defining the analogues of right languages and quotients for processes, we would like this property to hold.  Note that $\epsilon$-machines are the minimal unfilar presentation of a process, and so they play the role of the minimal DFA in the realm of processes.  Therefore, we expect the \emph{right process} of every state of an $\epsilon$-machine to be a \emph{future morph} of the process represented by that $\epsilon$-machine.  This is true from the construction of the $\epsilon$-machine. [cite: Shalizi].  
+\\
+An atom of a language \Language is defined to be any non-empty language of the form $\widetilde{K_0} \cap \widetilde{K_1} \cap ... \cap \widetilde{K_{n-1}}$ where $\widetilde{K_i}$ is either $K_i$ or $\overline{K_i}$ and the quotient $K_i$ is the right language of state $i$ of the minimal DFA of \Language.   
+
+Analogously, we define an atom of a process \Process to be $\widetilde{F_0} \cap \widetilde{F_1} \cap ... \cap \widetilde{F_{n-1}}$ where $\widetilde{F_i}$ is either $F_i$ or $\overline{F_i}$ and the future morph $F_i$ is the right process of state $i$ of the $\epsilon$-machine representation of \Process. 
+
+NOW: What does $\overline{F_i}$ mean?
+What does $\widetilde{F_i} \cap \widetilde{F_j}$ mean? 
+
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
