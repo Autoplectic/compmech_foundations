@@ -1,134 +1,374 @@
-\documentclass[prl,twocolumn,superscriptaddress,preprintnumbers,floatfix]{revtex4-1}
+% stuff
 
-\usepackage{etex}
-\usepackage{ifpdf}
-\usepackage{hyperref}
-\usepackage{dcolumn}
-\usepackage{url}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{bm}   % bold math
-\usepackage{bbm}
-\usepackage{verbatim}
-\usepackage{stmaryrd}
-\usepackage{amsthm}
-\usepackage{xcolor}
-\usepackage{setspace}
-\usepackage{cleveref}
-\usepackage{graphicx}
+\documentclass[prl,twocolumn,showpacs,superscriptaddress,preprintnumbers,floatfix]{revtex4-1}
 
+% ******************************************************************************
+%%% Imports and configuration
+
+\usepackage{etex}                        %
+\usepackage{ifpdf}                       %
+\usepackage[final,pagebackref]{hyperref} %
+\usepackage{graphicx}                    %
+\usepackage{dcolumn}                     %
+\usepackage{url}                         %
+\usepackage{amsmath}                     %
+\usepackage{amscd}                       %
+\usepackage{amsfonts}                    %
+\usepackage{amssymb}                     %
+\usepackage{amsthm}                      %
+\usepackage{bm}                          %
+\usepackage{bbm}                         %
+\usepackage{verbatim}                    %
+\usepackage{stmaryrd}                    %
+\usepackage{xcolor}                      %
+\usepackage{setspace}                    %
+\usepackage{xspace}                      % Let macros play nice with spaces
+\usepackage{nicefrac}                    % Pretty fractions
+\usepackage{cleveref}                    % Automatically label references
+\usepackage{booktabs}                    % Nicer tables
+\usepackage[caption=false]{subfig}       % Subfigures
+
+%% Various TikZ related imports
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{automata}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{positioning}
-\usetikzlibrary{plotmarks}
 \usetikzlibrary{calc}
-\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{external}
-\tikzexternalize
+\usetikzlibrary{intersections}
+\usetikzlibrary{patterns}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{positioning}
+\usetikzlibrary{through}
+%\tikzexternalize
 \tikzsetexternalprefix{images/}
+\input{vaucanson.tikz}
+
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 
-\input{macros}
+% Useful TikZ code stolen from http://tex.stackexchange.com/a/71596/66712
+\tikzset{
+  anticlockwise arc centered at/.style={
+    to path={
+      let \p1=(\tikztostart), \p2=(\tikztotarget), \p3=(#1) in
+      \pgfextra{
+        \pgfmathsetmacro{\anglestart}{atan2(\x1-\x3,\y1-\y3)}
+        \pgfmathsetmacro{\angletarget}{atan2(\x2-\x3,\y2-\y3)}
+        \pgfmathsetmacro{\angletarget}%
+        {\angletarget < \anglestart ? \angletarget+360 : \angletarget}
+        \pgfmathsetmacro{\radius}{veclen(\x1-\x3,\y1-\y3)}
+      }
+      arc(\anglestart:\angletarget:\radius pt) -- (\tikztotarget)
+    },
+  },
+  clockwise arc centered at/.style={
+    to path={
+      let \p1=(\tikztostart), \p2=(\tikztotarget), \p3=(#1) in
+      \pgfextra{
+        \pgfmathsetmacro{\anglestart}{atan2(\x1-\x3,\y1-\y3)}
+        \pgfmathsetmacro{\angletarget}{atan2(\x2-\x3,\y2-\y3)}
+        \pgfmathsetmacro{\angletarget}%
+        {\angletarget > \anglestart ? \angletarget - 360 : \angletarget}
+        \pgfmathsetmacro{\radius}{veclen(\x1-\x3,\y1-\y3)}
+      }
+      arc(\anglestart:\angletarget:\radius pt)  -- (\tikztotarget)
+    },
+  },
+}
+
+%% Used for code samples
+\usepackage{listings}
+\lstdefinestyle{mypython}{
+language=Python,                        % Code langugage
+basicstyle=\small\ttfamily,             % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{green!50!black},    % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{gray!10},        % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=b,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+morekeywords={as},                      % Additional keywords
+}
+
+%% Finally, computational mechanics macros.
+\input{cmechabbrev}
+
+%% Uncomment to list package versions
+%\listfiles
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\alert}[1]{\textbf{\textcolor{red}{#1}}}
+
+
+%% Various theorem styles
+\theoremstyle{plain}    \newtheorem{Lem}{Lemma}
+\theoremstyle{plain}    \newtheorem*{ProLem}{Proof}
+\theoremstyle{plain}    \newtheorem{Cor}{Corollary}
+\theoremstyle{plain}    \newtheorem*{ProCor}{Proof}
+\theoremstyle{plain}    \newtheorem{The}{Theorem}
+\theoremstyle{plain}    \newtheorem*{ProThe}{Proof}
+\theoremstyle{plain}    \newtheorem{Prop}{Proposition}
+\theoremstyle{plain}    \newtheorem*{ProProp}{Proof}
+\theoremstyle{plain}    \newtheorem*{Conj}{Conjecture}
+\theoremstyle{plain}    \newtheorem*{Rem}{Remark}
+\theoremstyle{plain}    \newtheorem{Def}{Definition}
+\theoremstyle{plain}    \newtheorem*{Not}{Notation}
+
+% ******************************************************************************
+% Set up pdf stuff
+
+\newcommand{\arxiv}[1]{\href{http://arxiv.org/abs/#1}{\texttt{arXiv}:#1}}
+ % SFI working papers do not have friendly URLs.
+\newcommand{\sfiwp}[1]{Santa Fe Institute Working Paper #1}
 
 \begin{document}
 
-\title{Mathematical Foundations of Computational Mechanics}
+\def\ourTitle{%
+  Title goes here.
+}
+
+\def\ourAbstract{%
+  We make rigorous the extension of formal language theory to processes and
+  further extend the theory to include atoms.
+}
+
+\def\ourKeywords{%
+  stochastic process, \texorpdfstring{\eM}{epsilon-machine}, causal states.
+}
+
+\hypersetup{
+  pdfauthor={James P. Crutchfield},
+  pdftitle={\ourTitle},
+  pdfsubject={\ourAbstract},
+  pdfkeywords={\ourKeywords},
+  pdfproducer={},
+  pdfcreator={}
+}
 
 \author{Ryan G. James}
-\email{ryan.james@colorado.edu}
-\affiliation{Department of Computer Science, University of Colorado at Boulder, Boulder, Colorado 80309}
+\email{rgjames@ucdavis.edu}
+\affiliation{Complexity Sciences Center and Physics Department,
+University of California at Davis, One Shields Avenue, Davis, CA 95616}
 
 \author{Nicole F. Sanderson}
 \email{nicole.sanderson@colorado.edu}
-\affiliation{Department of Mathematics, University of Colorado at Boulder, Boulder, Colorado 80309}
+\affiliation{Department of Mathematics, University of Colorado at Boulder,
+Boulder, Colorado 80309}
 
 \date{\today}
 \bibliographystyle{unsrt}
 
-\date{\today}
+
+% ******************************************************************************
+% The paper content
+
+\title{\ourTitle}
 
 \begin{abstract}
 
-We make rigorous the extension of formal language theory to processes and further extend the theory to include atoms. 
+\ourAbstract
 
 \vspace{0.1in}
-\noindent {\bf Keywords}:
+\noindent
+{\bf Keywords}: \ourKeywords
 
 \end{abstract}
 
-\maketitle
+\pacs{
+05.45.-a  %  Nonlinear dynamics and nonlinear dynamical systems
+89.75.Kd  %  Complex Systems: Patterns
+89.70.+c  %  Information science
+05.45.Tp  %  Time series analysis
+%02.50.Ey  %  Stochastic processes
+%02.50.-r  %  Probability theory, stochastic processes, and statistics
+%02.50.Ga  %  Markov processes
+%05.20.-y  %  Classical statistical mechanics
+}
 
+\preprint{\sfiwp{13-11-XXX}}
+\preprint{\arxiv{1312.XXXX}}
+
+\title{\ourTitle}
+\date{\today}
+\maketitle
+\tableofcontents
+
+\setstretch{1.1}
+
+
+
+\section{Introduction}
+\label{sec:introduction}
 Goals:
 \begin{enumerate}
   \item What are the atoms of a process?
-  \item conjecture: $h_\mu$ can be calculated in closed form from any atomic presention, e.g. $h_\mu = \sum \pi_i \H{\textrm{future morph}_i}$.
-  \item formally define the \etomata.
-  \item define the ``regular'' processes: those with a finite number of future morphs.
+  \item conjecture: $h_\mu$ can be calculated in closed form from any atomic
+    presention, e.g. $h_\mu = \sum \pi_i \H{\textrm{future morph}_i}$.
+  \item formally define the \eT.
+  \item define the ``regular'' processes: those with a finite number of future
+    morphs.
   \item define co-regular processes.
-  \item if \etomata is unifilar, is it isomorphic to the \emachine?
-  \item is the reverse of a co-unifilar \emachine the \emachine for the reverse process?
-  \item define ``(future) state morphs'', the future morph generated from a state.
+  \item if \eT is unifilar, is it isomorphic to the \eM?
+  \item is the reverse of a co-unifilar \eM the \eM for the reverse
+    process?
+  \item define ``(future) state morphs'', the future morph generated from a
+    state.
   \item relate to Krohn-Rhodes
 \end{enumerate}
 
-\section{Notes}
-Formal language theory utilizes the notions of (left) quotients, (right) quotients, right languages, and left languages to characterize languages.  Our goal is to rigorously define analogous concepts in the realm of processes.  A language \Language is defined to be a subset of the free monoid $\Sigma^{\star}$on an alphabet $\Sigma$. The (left) quotient of a language \Language for a word $w$ is defined to be $w^{-1}\Language = \{ x | wx \in \Language \}$. 
+\section{Notes} Formal language theory utilizes the notions of (left) quotients,
+(right) quotients, right languages, and left languages to characterize
+languages.  Our goal is to rigorously define analogous concepts in the realm of
+processes.  A language \Language is defined to be a subset of the free monoid
+$\Sigma^{\star}$on an alphabet $\Sigma$. The (left) quotient of a language
+\Language for a word $w$ is defined to be $w^{-1}\Language = \{ x | wx \in
+\Language \}$.
 
-A process \Process is defined to be $\{\subseteq \Sigma^{\mathbb{Z}}, \mu\}$ where $\Sigma^{\mathbb{Z}}$ is the set of bi-infinite strings over the alphabet $\Sigma$ and $\mu$ is a shift-invariant measure on this space.  
+A process \Process is defined to be $\{\subseteq \Sigma^{\mathbb{Z}}, \mu\}$
+where $\Sigma^{\mathbb{Z}}$ is the set of bi-infinite strings over the alphabet
+$\Sigma$ and $\mu$ is a shift-invariant measure on this space.
 
-Our working definitions are as follows: 
+Our working definitions are as follows:
 
-The (left) quotient of a process \Process is defined to be $\leftword \Process 
-= \{ \{ \rightword, \mu_{\leftword} \} | \mu(\leftword \rightword) \neq 0 \}$. 
+The (left) quotient of a process \Process is defined to be $\past^{-1} \Process =
+\{ \{ \future, \mu_{\past} \} | \mu(\past \future) \neq 0 \}$.
 
-We are thinking that we want $\mu_{\leftword}$ to be something like the sum over states we can be in after having seen $\leftword$ of the probability of seeing $\rightword$ from that state times the probability of being in that state.  We'll need to make sure this is actually a measure, and we want this quotient to include the data of both the support as well as a probability distribution.  
+We are thinking that we want $\mu_{\past}$ to be something like the sum over
+states we can be in after having seen $\past$ of the probability of seeing
+$\future$ from that state times the probability of being in that state.
+We'll need to make sure this is actually a measure, and we want this quotient to
+include the data of both the support as well as a probability distribution.
 
-A given language \Language has a set of quotients.  One way of defining a regular language is that the language has a finite set of quotients.  The atoms of a language are defined to be the intersections of all the (either) quotients or complements of the quotients in $\Sigma^{\star}$.  
+A given language \Language has a set of quotients.  One way of defining a
+regular language is that the language has a finite set of quotients.  The atoms
+of a language are defined to be the intersections of all the (either) quotients
+or complements of the quotients in $\Sigma^{\star}$.
 
-Difference between language and process: if there are a finite number of left quotients, then there are a finite number or right quotients (this comes from the reverse of a regular language being regular, seen from reversing DFA).  Not true for processes, since the reverse of a unifilar (stationary, recurrent, blah blah blah) HMM is not necessarily unifilar and making it unifilar might make it infinite. Example: INSERT.  
+Difference between language and process: if there are a finite number of left
+quotients, then there are a finite number or right quotients (this comes from
+the reverse of a regular language being regular, seen from reversing DFA).  Not
+true for processes, since the reverse of a unifilar (stationary, recurrent, blah
+blah blah) HMM is not necessarily unifilar and making it unifilar might make it
+infinite. Example: INSERT.
 
 *STATE MORPHS (i.e. right language of state)
 
-(left) Quotients translate to (future) morphs. (right) Quotients correspond to (past) morphs.  We need to figure out what intersection means for morphs.  We can construct the atoms directly to determine this.  Recall, one way of constructing atoms for a language \Language is to reverse the minimal DFA of $\Language^{R}$.  The atoms are then the right languages of the states. We can do the analogous process for processes where we reverse the epsilon-machine of the reverse process, and look at the future morphs of the states of that "etomata" (a typically non-unifilar HMM).
+(left) Quotients translate to future) morphs. right) Quotients correspond to
+(past) morphs.  We need to figure out what intersection means for morphs.  We
+(can construct the atoms directly to determine this.  Recall, one way of
+(constructing atoms for a language \Language is to reverse the minimal DFA of
+($\Language^{R}$.  The atoms are then the right languages of the states. We can
+(do the analogous process for processes where we reverse the epsilon-machine of
+(the reverse process, and look at the future morphs of the states of that
+("etomata" a typically non-unifilar HMM).
 
-We want something like intersections, but over distributions of future morphs.  We know the future morphs, and the atoms.  Now we need to determine the operator to get from A to B.  
+We want something like intersections, but over distributions of future morphs.
+We know the future morphs, and the atoms.  Now we need to determine the operator
+to get from A to B.
 
-Define Reverse Process: (limiting set of word probabilities - def, reverse the words at each step) would be nice to define directly on subshift. hoping that shift invariance of measure means we don't care where we flip it, all words should be in it.  We want to match up with the process that reversing the epsilon machine representation of a given process spits out. [see Nick Travers]
+Define Reverse Process: (limiting set of word probabilities - def, reverse the
+words at each step) would be nice to define directly on subshift. hoping that
+shift invariance of measure means we don't care where we flip it, all words
+should be in it.  We want to match up with the process that reversing the
+\eM representation of a given process spits out. [see Nick Travers]
 
-Define Co-regular processes: We're calling processes with a finite epsilon-machine representation regular. Co-regular processes are those where the epsilon machine representation of the process, and the epsilon machine representation of the process achieved by reversing the epsilon machine (might result in a non-unifilar HMM) are finite.  These set of processes could be special - good to calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine, feed future backwards into e-machine). Co-unifilar gets us K = I = C = $C_{\mu}$ = E.  (also, if $C_{\mu} = E$, know co-unifilar) If our ``\etomata'' is co-unifilar, then we get all these nice things.  
+Define Co-regular processes: We're calling processes with a finite epsilon-
+machine representation regular. Co-regular processes are those where the epsilon
+machine representation of the process, and the epsilon machine representation of
+the process achieved by reversing the epsilon machine (might result in a non-
+unifilar HMM) are finite.  These set of processes could be special - good to
+calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine
+isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine,
+feed future backwards into e-machine). Co-unifilar gets us $K = I = C = \Cmu
+= \EE$.  (also, if $\Cmu = \EE$, know co-unifilar) If our ``\eT'' is co-
+unifilar, then we get all these nice things.
 
-**Gac's-Korner information, mutual information is not a random variable; can't take intersection of two sigma algebras and take entropy (this results in the common information K) which is less than the mutual information. in set theory, this works correctly. not in information theory.  
+**Gac's-Korner information, mutual information is not a random variable; can't
+**take intersection of two sigma algebras and take entropy (this results in the
+**common information K) which is less than the mutual information. in set
+**theory, this works correctly. not in information theory.
 
 TO GET ETOMATA OF PROCESS:
 1) Start with epsilon machine
-2) Reverse 
+2) Reverse
 3) Mixed State (i.e. determinize, unifilarize)
 4) Reverse (in general, loose unifilarity)
 
-Future Morphs of a Process:
-Ryan: Conditional distribution; conditioned on a past $\leftword$ having occurred, this is the distribution over futures $\{ \rightword\}$.  
-How do we compute this conditional distribution for a given process, or presentation of a process? 
-Let's find a reference to see how they compute conditional distributions over bi-infinite strings.
+Future Morphs of a Process: Ryan: Conditional distribution; conditioned on a
+past $\past$ having occurred, this is the distribution over futures $\{
+\future\}$. How do we compute this conditional distribution for a given
+process, or presentation of a process? Let's find a reference to see how they
+compute conditional distributions over bi-infinite strings.
 
-It has been shown that if $D$ is a minimal DFA of \Language, then the right language of every state of $D$ is a quotient of \Language.  When defining the analogues of right languages and quotients for processes, we would like this property to hold.  Note that $\epsilon$-machines are the minimal unfilar presentation of a process, and so they play the role of the minimal DFA in the realm of processes.  Therefore, we expect the \emph{right process} of every state of an $\epsilon$-machine to be a \emph{future morph} of the process represented by that $\epsilon$-machine.  This is true from the construction of the $\epsilon$-machine. [cite: Shalizi].  
-\\
-An atom of a language \Language is defined to be any non-empty language of the form $\widetilde{K_0} \cap \widetilde{K_1} \cap ... \cap \widetilde{K_{n-1}}$ where $\widetilde{K_i}$ is either $K_i$ or $\overline{K_i}$ and the quotient $K_i$ is the right language of state $i$ of the minimal DFA of \Language.   
+It has been shown that if $D$ is a minimal DFA of \Language, then the right
+language of every state of $D$ is a quotient of \Language.  When defining the
+analogues of right languages and quotients for processes, we would like this
+property to hold.  Note that \eM are the minimal unifilar
+presentation of a process, and so they play the role of the minimal DFA in the
+realm of processes.  Therefore, we expect the \emph{right process} of every
+state of an \eM to be a \emph{future morph} of the process
+represented by that $\epsilon$-machine.  This is true from the construction of
+the \eM. [cite: Shalizi]. \\ An atom of a language \Language is
+defined to be any non-empty language of the form $\widetilde{K_0} \cap
+\widetilde{K_1} \cap ... \cap \widetilde{K_{n-1}}$ where $\widetilde{K_i}$ is
+either $K_i$ or $\overline{K_i}$ and the quotient $K_i$ is the right language of
+state $i$ of the minimal DFA of \Language.
 
-Analogously, we define an atom of a process \Process to be $\widetilde{F_0} \cap \widetilde{F_1} \cap ... \cap \widetilde{F_{n-1}}$ where $\widetilde{F_i}$ is either $F_i$ or $\overline{F_i}$ and the future morph $F_i$ is the right process of state $i$ of the $\epsilon$-machine representation of \Process. 
+Analogously, we define an atom of a process \Process to be $\widetilde{F_0} \cap
+\widetilde{F_1} \cap ... \cap \widetilde{F_{n-1}}$ where $\widetilde{F_i}$ is
+either $F_i$ or $\overline{F_i}$ and the future morph $F_i$ is the right process
+of state $i$ of the \eM representation of \Process.
 
-NOW: What does $\overline{F_i}$ mean?
-What does $\widetilde{F_i} \cap \widetilde{F_j}$ mean? 
+NOW: What does $\overline{F_i}$ mean? What does $\widetilde{F_i} \cap
+\widetilde{F_j}$ mean?
 
-Start from definition of a process \Process as a subshift of the full shift $\Sigma^{\mathbb{Z}}$, where $\Process = P_{F}$ and $F$ is the collection of forbidden blocks.  Should we consider complements and intersections by looking at these collection of forbidden blocks? 
-*claim: complements of subshifts of finite type are not of finite type
-** intersection of future morphs as union of F-sets
+Start from definition of a process \Process as a subshift of the full shift
+$\Sigma^{\mathbb{Z}}$, where $\Process = P_{F}$ and $F$ is the collection of
+forbidden blocks.  Should we consider complements and intersections by looking
+at these collection of forbidden blocks? *claim: complements of subshifts of
+finite type are not of finite type ** intersection of future morphs as union of
+F-sets
 
-\bibliographystyle{unsrt}
+
+a process's \emph{future morph} by a past $x_{:t}$ is $x_{:t}^{-1}\Process =
+p(X_{t:} | X_{:t} = x_{:t})$. If the set $\{ x_{:t}^{-1}\Process \forall x_{:t}
+\in X_{:t} \}$ is finite, we refer the process as \emph{finite}. A process is
+\emph{bifinite} if it is both finite and the set of atoms of the process is also
+finite.
+
+Basically, finite implies the \eM is finite. bifinite implies both the
+\eM and the \eT are finite. Properties: if a process is bifinite, so
+is its reverse. The processes with finite markov order are a proper subset of
+the bifinite processes. Proof: markov order is reversible, and the number of
+future morphs of a markovian process is bounded above by $\mathcal{A}^R$.
+therefore both the forward and reverse \eMs are finite, and so the
+process is bifinite. This is a proper subset because we know the even process is
+bifinite but not markovian.
+
+\section*{Acknowledgments}
+\label{sec:acknowledgments}
+
+We thank people for things.
+
 \bibliography{bibliography}
+
+\cleardoublepage
+
+\appendix
+
+\section{Appendix A}
+\label{sec:appendix_a}
+
+This is an appendix, if it is needed.
 
 \end{document}
