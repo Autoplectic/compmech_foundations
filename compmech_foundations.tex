@@ -139,11 +139,14 @@ morekeywords={as},                      % Additional keywords
 
 \def\ourAbstract{%
   We make rigorous the extension of formal language theory to processes and
-  further extend the theory to include atoms.
+  further extend the theory to include atoms. These new developments allow us
+  to catagorize processes in ways formerly unavailable, and shed light on the
+  applicability of various algorithms to classes of processes.
 }
 
 \def\ourKeywords{%
-  stochastic process, \texorpdfstring{\eM}{epsilon-machine}, causal states.
+  stochastic process, \texorpdfstring{\eM}{epsilon-machine},
+  \texorpdfstring{\eT}{etomata}, regular language, formal language theory.
 }
 
 \hypersetup{
@@ -209,6 +212,7 @@ Boulder, Colorado 80309}
 
 \section{Introduction}
 \label{sec:introduction}
+
 Goals:
 \begin{enumerate}
   \item What are the atoms of a process?
@@ -226,10 +230,12 @@ Goals:
   \item relate to Krohn-Rhodes
 \end{enumerate}
 
-\section{Notes} Formal language theory utilizes the notions of (left) quotients,
-(right) quotients, right languages, and left languages to characterize
-languages.  Our goal is to rigorously define analogous concepts in the realm of
-processes.  A language \Language is defined to be a subset of the free monoid
+\section{Notes}
+
+Formal language theory utilizes the notions of (left) quotients, (right)
+quotients, right languages, and left languages to characterize languages. Our
+goal is to rigorously define analogous concepts in the realm of processes. A
+language \Language is defined to be a subset of the free monoid
 $\Sigma^{\star}$on an alphabet $\Sigma$. The (left) quotient of a language
 \Language for a word $w$ is defined to be $w^{-1}\Language = \{ x | wx \in
 \Language \}$.
@@ -354,6 +360,11 @@ future morphs of a markovian process is bounded above by $\mathcal{A}^R$.
 therefore both the forward and reverse \eMs are finite, and so the
 process is bifinite. This is a proper subset because we know the even process is
 bifinite but not markovian.
+
+\section{Definitions}
+\label{sec:definitions}
+
+A \emph{process} \Process is a tuple $(, \mu)$
 
 \section*{Acknowledgments}
 \label{sec:acknowledgments}
