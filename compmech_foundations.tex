@@ -18,6 +18,8 @@
 \usepackage{amsthm}                      %
 \usepackage{bm}                          %
 \usepackage{bbm}                         %
+\usepackage{mathtools}                   %
+\usepackage{etoolbox}                    %
 \usepackage{verbatim}                    %
 \usepackage{stmaryrd}                    %
 \usepackage{xcolor}                      %
@@ -27,6 +29,10 @@
 \usepackage{cleveref}                    % Automatically label references
 \usepackage{booktabs}                    % Nicer tables
 \usepackage[caption=false]{subfig}       % Subfigures
+\usepackage[T1]{fontenc}                 % Allow copy/paste of unicode
+\usepackage{lmodern}                     % Nicer looking font
+\usepackage[scaled=0.72]{beramono}       % More nicer fonts
+\usepackage{microtype}                   % Nicer fonts too
 
 %% Various TikZ related imports
 \usepackage{tikz}
@@ -134,7 +140,7 @@ morekeywords={as},                      % Additional keywords
 \begin{document}
 
 \def\ourTitle{%
-  Title goes here.
+  Toward a Categorization of Finite Processes
 }
 
 \def\ourAbstract{%
@@ -213,6 +219,74 @@ Boulder, Colorado 80309}
 \section{Introduction}
 \label{sec:introduction}
 
+Stochastic processes are a vital component of modern science. Here we list
+examples from biology, physics, computer science, etc etc. Despite this
+importance, there is a severe lack of formalism in both the categorization and
+analysis of such stochastic processes. Here we take several steps toward such a
+formalization by adapting many of the concepts used in the analysis of regular
+languages to stochastic processes. Some adapt directly, whereas others are
+stymied by the probabilistic nature of processes.
+
+\section{Definitions}
+\label{sec:definitions}
+
+Things to define:
+\begin{itemize}
+  \item alphabet
+  \item process
+  \item stationarity, ergodicity
+  \item future morphs
+  \item past morphs
+  \item finite-length morphs?
+  \item atoms
+  \item finite processes (future morphs are finite)
+  \item semi-finite processes (future morphs are infinite)
+  \item markovian processes
+  \item \eM
+  \item \eT
+  \item atomic presentation
+\end{itemize}
+
+Things to prove:
+\begin{itemize}
+  \item markovian processes are a proper subset of finite processes
+  \item infinite finite-length future morphs implies infinite past morphs
+  \item the above is equivalent to infinite transient states implies infinite atoms
+  \item which is the same as infinite transients implies infinite reverse \eM
+  \item the weighted state edge entropy of an atomic presentation is \hmu
+  \item the \eM is the presentation whose state morphs are the process's future morphs
+  \item the \eT is the presentation whose state morphs are the process's atoms
+  \item spectral tools only work on finite processes
+\end{itemize}
+
+Things to discuss:
+\begin{itemize}
+  \item future (past) morph = left (right) quotient
+  \item markovian = shift of finite type
+  \item non-markovian = strictly sofic
+  \item the distinction between finite and semi-finite doesn't exist with
+    regular languages, since the distinction between a finite and an infinite
+    word doesn't exist.
+  \item finite processes are closed under reversal
+  \item semi-finite processes are different: either the forward or reverse has a
+    finite number of future morphs, and the other infinite. whichever has
+    finite, has an infinite number of transients (e.g. finite-length future morphs)
+  \item semi-finite processes have either a finite \eM or a finite \eT, but not both
+  \item the processes with both \eM and \eT infinite should be studied similar
+    to formal language theory, as a finite thing with a particular form of
+    memory
+  \item are there any semi-finite processes where $\min\{\Lsync\} = \infty$?
+  \item \eM = minimal DFA
+  \item \eT = \'{a}tomata
+\end{itemize}
+
+Informally, a process is a sequence of random variables drawn from an alphabet
+\MeasAlphabet. More formally, a \emph{process} \Process is a tuple $(\mathbf{X},
+\mu)$, where $\mathbf{X} \subset \MeasAlphabet^\mathbb{Z}$ is a shift space,
+$\mu$ is a metric, and the pair is shift invariant.
+
+\section{Notes}
+
 Goals:
 \begin{enumerate}
   \item What are the atoms of a process?
@@ -229,8 +303,6 @@ Goals:
     state.
   \item relate to Krohn-Rhodes
 \end{enumerate}
-
-\section{Notes}
 
 Formal language theory utilizes the notions of (left) quotients, (right)
 quotients, right languages, and left languages to characterize languages. Our
@@ -360,11 +432,6 @@ future morphs of a markovian process is bounded above by $\mathcal{A}^R$.
 therefore both the forward and reverse \eMs are finite, and so the
 process is bifinite. This is a proper subset because we know the even process is
 bifinite but not markovian.
-
-\section{Definitions}
-\label{sec:definitions}
-
-A \emph{process} \Process is a tuple $(, \mu)$
 
 \section*{Acknowledgments}
 \label{sec:acknowledgments}
