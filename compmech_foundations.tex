@@ -251,12 +251,17 @@ Things to prove:
 \begin{itemize}
   \item markovian processes are a proper subset of finite processes
   \item infinite finite-length future morphs implies infinite past morphs
-  \item the above is equivalent to infinite transient states implies infinite atoms
+  \item the above is equivalent to infinite transient states implies infinite
+    atoms
   \item which is the same as infinite transients implies infinite reverse \eM
   \item the weighted state edge entropy of an atomic presentation is \hmu
-  \item the \eM is the presentation whose state morphs are the process's future morphs
+  \item if a presentation is atomic, then the mixed state algorithm applied to
+    it will produce the \eM
+  \item the \eM is the presentation whose state morphs are the process's future
+    morphs
   \item the \eT is the presentation whose state morphs are the process's atoms
   \item spectral tools only work on finite processes
+  \item the Brzozowski algorithm constructs the \eM from any HMM.
 \end{itemize}
 
 Things to discuss:
@@ -284,6 +289,14 @@ Informally, a process is a sequence of random variables drawn from an alphabet
 \MeasAlphabet. More formally, a \emph{process} \Process is a tuple $(\mathbf{X},
 \mu)$, where $\mathbf{X} \subset \MeasAlphabet^\mathbb{Z}$ is a shift space,
 $\mu$ is a metric, and the pair is shift invariant.
+
+A \emph{future morph} of a process \Process by a past \past is defined
+$\past^{-1}\Process = \Prob(\Future | \Past = \past)$. This is analogous to the
+\emph{left quotient} of a language: $w^{-1}\Language = \{ x | wx \in \Language
+\}$ except that $w$ and $x$ become the semi-infinite \past and \future, and
+rather than consider the set we consider a distribution. We can also define
+future morphs of a process by a \emph{finite} past \ms{-t}{0}:
+$\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.++
 
 \section{Notes}
 
