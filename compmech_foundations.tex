@@ -27,7 +27,7 @@
 \usepackage{xspace}                      % Let macros play nice with spaces
 \usepackage{nicefrac}                    % Pretty fractions
 \usepackage{cleveref}                    % Automatically label references
-\usepackage{booktabs}                    % Nicer tables
+%\usepackage{booktabs}                    % Nicer tables
 \usepackage[caption=false]{subfig}       % Subfigures
 \usepackage[T1]{fontenc}                 % Allow copy/paste of unicode
 \usepackage{lmodern}                     % Nicer looking font
@@ -296,7 +296,36 @@ $\past^{-1}\Process = \Prob(\Future | \Past = \past)$. This is analogous to the
 \}$ except that $w$ and $x$ become the semi-infinite \past and \future, and
 rather than consider the set we consider a distribution. We can also define
 future morphs of a process by a \emph{finite} past \ms{-t}{0}:
-$\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.++
+$\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.
+
+\section{Comparision}
+\label{sec:comparison}
+
+\begin{table*}[t]
+  \centering
+  \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}} lll}
+    \toprule
+    Formal Languages               & Symbolic Dynamics               & Computational Mechanics \\
+    \cline{1-3}
+    Language                       & Shift Space                     & Process                 \\
+    Automata                       & Cover / Presentation / Automata & Presentation            \\
+    Left Quotient                  & Right Context                   & Future Morph            \\
+    Right Quotient                 & Left Context                    & Past Morph              \\
+    Syntactic Equivalence          & ???                             & Causal Equivalence      \\
+    Syntactic Congruence           & ???                             & ???                     \\
+    Deterministic                  & Right-Resolving                 & Unifilar                \\
+    Co-Deterministic               & Left-Resolving                  & Co-Unifilar             \\
+    Bideterministic / Reversible   & ???                             & Biunifilar              \\
+    Minimal DFA / Syntactic Monoid & Right Fischer Cover             & \EM                     \\
+    $\acute{\textrm{A}}$tomata     & Left Fischer Cover (?)          & \eT                     \\
+    Locally-Testable (?)           & Finite Type                     & Markovian               \\
+    ???                            & Almost Finite Type              & Finite-Cryptic          \\
+    Regular                        & Sofic                           & Finite                  \\
+    ???                            & Step                            & Markov Order            \\
+    ???                            & Left-Delay                      & Cryptic Order           \\
+    \botrule
+  \end{tabular*}
+\end{table*}
 
 \section{Notes}
 
