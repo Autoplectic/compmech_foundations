@@ -2,140 +2,14 @@
 
 \documentclass[prl,twocolumn,showpacs,superscriptaddress,preprintnumbers,floatfix]{revtex4-1}
 
-% ******************************************************************************
-%%% Imports and configuration
+\usepackage{dynlearn}
 
-\usepackage{etex}                        %
-\usepackage{ifpdf}                       %
-\usepackage[final,pagebackref]{hyperref} %
-\usepackage{graphicx}                    %
-\usepackage{dcolumn}                     %
-\usepackage{url}                         %
-\usepackage{amsmath}                     %
-\usepackage{amscd}                       %
-\usepackage{amsfonts}                    %
-\usepackage{amssymb}                     %
-\usepackage{amsthm}                      %
-\usepackage{bm}                          %
-\usepackage{bbm}                         %
-\usepackage{mathtools}                   %
-\usepackage{etoolbox}                    %
-\usepackage{verbatim}                    %
-\usepackage{stmaryrd}                    %
-\usepackage{xcolor}                      %
-\usepackage{setspace}                    %
-\usepackage{xspace}                      % Let macros play nice with spaces
-\usepackage{nicefrac}                    % Pretty fractions
-\usepackage{cleveref}                    % Automatically label references
-%\usepackage{booktabs}                    % Nicer tables
-\usepackage[caption=false]{subfig}       % Subfigures
-\usepackage[T1]{fontenc}                 % Allow copy/paste of unicode
-\usepackage{lmodern}                     % Nicer looking font
-\usepackage[scaled=0.72]{beramono}       % More nicer fonts
-\usepackage{microtype}                   % Nicer fonts too
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
 
-%% Various TikZ related imports
-\usepackage{tikz}
-\usetikzlibrary{arrows}
-\usetikzlibrary{automata}
-\usetikzlibrary{calc}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{external}
-\usetikzlibrary{intersections}
-\usetikzlibrary{patterns}
-\usetikzlibrary{plotmarks}
-\usetikzlibrary{positioning}
-\usetikzlibrary{through}
-%\tikzexternalize
-\tikzsetexternalprefix{images/}
-\input{vaucanson.tikz}
+\newcommand{\etomata}{\ensuremath{\acute{\epsilon}}\text{tomata}}
 
-\usepackage{pgfplots}
-\pgfplotsset{compat=newest}
-
-% Useful TikZ code stolen from http://tex.stackexchange.com/a/71596/66712
-\tikzset{
-  anticlockwise arc centered at/.style={
-    to path={
-      let \p1=(\tikztostart), \p2=(\tikztotarget), \p3=(#1) in
-      \pgfextra{
-        \pgfmathsetmacro{\anglestart}{atan2(\x1-\x3,\y1-\y3)}
-        \pgfmathsetmacro{\angletarget}{atan2(\x2-\x3,\y2-\y3)}
-        \pgfmathsetmacro{\angletarget}%
-        {\angletarget < \anglestart ? \angletarget+360 : \angletarget}
-        \pgfmathsetmacro{\radius}{veclen(\x1-\x3,\y1-\y3)}
-      }
-      arc(\anglestart:\angletarget:\radius pt) -- (\tikztotarget)
-    },
-  },
-  clockwise arc centered at/.style={
-    to path={
-      let \p1=(\tikztostart), \p2=(\tikztotarget), \p3=(#1) in
-      \pgfextra{
-        \pgfmathsetmacro{\anglestart}{atan2(\x1-\x3,\y1-\y3)}
-        \pgfmathsetmacro{\angletarget}{atan2(\x2-\x3,\y2-\y3)}
-        \pgfmathsetmacro{\angletarget}%
-        {\angletarget > \anglestart ? \angletarget - 360 : \angletarget}
-        \pgfmathsetmacro{\radius}{veclen(\x1-\x3,\y1-\y3)}
-      }
-      arc(\anglestart:\angletarget:\radius pt)  -- (\tikztotarget)
-    },
-  },
-}
-
-%% Used for code samples
-\usepackage{listings}
-\lstdefinestyle{mypython}{
-language=Python,                        % Code langugage
-basicstyle=\small\ttfamily,             % Code font, Examples: \footnotesize, \ttfamily
-keywordstyle=\color{green!50!black},    % Keywords font ('*' = uppercase)
-commentstyle=\color{gray},              % Comments font
-numbers=left,                           % Line nums position
-numberstyle=\tiny,                      % Line-numbers fonts
-stepnumber=1,                           % Step between two line-numbers
-numbersep=5pt,                          % How far are line-numbers from code
-backgroundcolor=\color{gray!10},        % Choose background color
-frame=none,                             % A frame around the code
-tabsize=2,                              % Default tab size
-captionpos=b,                           % Caption-position = bottom
-breaklines=true,                        % Automatic line breaking?
-breakatwhitespace=false,                % Automatic breaks only at whitespace?
-showspaces=false,                       % Dont make spaces visible
-showtabs=false,                         % Dont make tabls visible
-morekeywords={as},                      % Additional keywords
-}
-
-%% Finally, computational mechanics macros.
-\input{cmechabbrev}
-
-%% Uncomment to list package versions
-%\listfiles
-
-\setlength{\parindent}{0pt}
-
-\newcommand{\alert}[1]{\textbf{\textcolor{red}{#1}}}
-
-
-%% Various theorem styles
-\theoremstyle{plain}    \newtheorem{Lem}{Lemma}
-\theoremstyle{plain}    \newtheorem*{ProLem}{Proof}
-\theoremstyle{plain}    \newtheorem{Cor}{Corollary}
-\theoremstyle{plain}    \newtheorem*{ProCor}{Proof}
-\theoremstyle{plain}    \newtheorem{The}{Theorem}
-\theoremstyle{plain}    \newtheorem*{ProThe}{Proof}
-\theoremstyle{plain}    \newtheorem{Prop}{Proposition}
-\theoremstyle{plain}    \newtheorem*{ProProp}{Proof}
-\theoremstyle{plain}    \newtheorem*{Conj}{Conjecture}
-\theoremstyle{plain}    \newtheorem*{Rem}{Remark}
-\theoremstyle{plain}    \newtheorem{Def}{Definition}
-\theoremstyle{plain}    \newtheorem*{Not}{Notation}
-
-% ******************************************************************************
-% Set up pdf stuff
-
-\newcommand{\arxiv}[1]{\href{http://arxiv.org/abs/#1}{\texttt{arXiv}:#1}}
- % SFI working papers do not have friendly URLs.
-\newcommand{\sfiwp}[1]{Santa Fe Institute Working Paper #1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -152,7 +26,7 @@ morekeywords={as},                      % Additional keywords
 
 \def\ourKeywords{%
   stochastic process, \texorpdfstring{\eM}{epsilon-machine},
-  \texorpdfstring{\eT}{etomata}, regular language, formal language theory.
+  \texorpdfstring{\etomata}{etomata}, regular language, formal language theory.
 }
 
 \hypersetup{
@@ -243,7 +117,7 @@ Things to define:
   \item semi-finite processes (future morphs are infinite)
   \item markovian processes
   \item \eM
-  \item \eT
+  \item \etomata
   \item atomic presentation
 \end{itemize}
 
@@ -259,7 +133,7 @@ Things to prove:
     it will produce the \eM
   \item the \eM is the presentation whose state morphs are the process's future
     morphs
-  \item the \eT is the presentation whose state morphs are the process's atoms
+  \item the \etomata is the presentation whose state morphs are the process's atoms
   \item spectral tools only work on finite processes
   \item the Brzozowski algorithm constructs the \eM from any HMM.
 \end{itemize}
@@ -276,13 +150,13 @@ Things to discuss:
   \item semi-finite processes are different: either the forward or reverse has a
     finite number of future morphs, and the other infinite. whichever has
     finite, has an infinite number of transients (e.g. finite-length future morphs)
-  \item semi-finite processes have either a finite \eM or a finite \eT, but not both
-  \item the processes with both \eM and \eT infinite should be studied similar
+  \item semi-finite processes have either a finite \eM or a finite \etomata, but not both
+  \item the processes with both \eM and \etomata infinite should be studied similar
     to formal language theory, as a finite thing with a particular form of
     memory
   \item are there any semi-finite processes where $\min\{\Lsync\} = \infty$?
   \item \eM = minimal DFA
-  \item \eT = \'{a}tomata
+  \item \etomata = {\'a}tomata
 \end{itemize}
 
 Informally, a process is a sequence of random variables drawn from an alphabet
@@ -306,7 +180,7 @@ $\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.
   \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}} lll}
     \toprule
     Formal Languages               & Symbolic Dynamics               & Computational Mechanics \\
-    \cline{1-3}
+    \midrule
     Language                       & Shift Space                     & Process                 \\
     Automata                       & Cover / Presentation / Automata & Presentation            \\
     Left Quotient                  & Right Context                   & Future Morph            \\
@@ -317,13 +191,13 @@ $\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.
     Co-Deterministic               & Left-Resolving                  & Co-Unifilar             \\
     Bideterministic / Reversible   & ???                             & Biunifilar              \\
     Minimal DFA / Syntactic Monoid & Right Fischer Cover             & \EM                     \\
-    $\acute{\textrm{A}}$tomata     & Left Fischer Cover (?)          & \eT                     \\
+    {\'A}tomata                    & Left Fischer Cover (?)          & \etomata                \\
     Locally-Testable (?)           & Finite Type                     & Markovian               \\
     ???                            & Almost Finite Type              & Finite-Cryptic          \\
     Regular                        & Sofic                           & Finite                  \\
     ???                            & Step                            & Markov Order            \\
-    ???                            & Left-Delay                      & Cryptic Order           \\
-    \botrule
+    ???                            & Left-Delay (of the RFC)         & Cryptic Order           \\
+    \bottomrule
   \end{tabular*}
 \end{table*}
 
@@ -334,11 +208,11 @@ Goals:
   \item What are the atoms of a process?
   \item conjecture: $h_\mu$ can be calculated in closed form from any atomic
     presention, e.g. $h_\mu = \sum \pi_i \H{\textrm{future morph}_i}$.
-  \item formally define the \eT.
+  \item formally define the \etomata.
   \item define the ``regular'' processes: those with a finite number of future
     morphs.
   \item define co-regular processes.
-  \item if \eT is unifilar, is it isomorphic to the \eM?
+  \item if \etomata is unifilar, is it isomorphic to the \eM?
   \item is the reverse of a co-unifilar \eM the \eM for the reverse
     process?
   \item define ``(future) state morphs'', the future morph generated from a
@@ -410,13 +284,10 @@ unifilar HMM) are finite.  These set of processes could be special - good to
 calculate E (excess entropy).  *Co-unifilar implies reverse epsilon machine
 isomorphic to epsilon machine (2 part proof, gauge info = 0 of epsilon machine,
 feed future backwards into e-machine). Co-unifilar gets us $K = I = C = \Cmu
-= \EE$.  (also, if $\Cmu = \EE$, know co-unifilar) If our ``\eT'' is co-
+= \EE$.  (also, if $\Cmu = \EE$, know co-unifilar) If our ``\etomata'' is co-
 unifilar, then we get all these nice things.
 
-**Gac's-Korner information, mutual information is not a random variable; can't
-**take intersection of two sigma algebras and take entropy (this results in the
-**common information K) which is less than the mutual information. in set
-**theory, this works correctly. not in information theory.
+G{\'a}cs-K{\"o}rner common information, mutual information is not a random variable; can't take intersection of two sigma algebras and take entropy (this results in the common information K) which is less than the mutual information. in set theory, this works correctly. not in information theory.
 
 TO GET ETOMATA OF PROCESS:
 1) Start with epsilon machine
@@ -467,7 +338,7 @@ p(X_{t:} | X_{:t} = x_{:t})$. If the set $\{ x_{:t}^{-1}\Process \forall x_{:t}
 finite.
 
 Basically, finite implies the \eM is finite. bifinite implies both the
-\eM and the \eT are finite. Properties: if a process is bifinite, so
+\eM and the \etomata are finite. Properties: if a process is bifinite, so
 is its reverse. The processes with finite markov order are a proper subset of
 the bifinite processes. Proof: markov order is reversible, and the number of
 future morphs of a markovian process is bounded above by $\mathcal{A}^R$.

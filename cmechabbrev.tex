@@ -1,6 +1,3 @@
-\DeclareMathOperator*{\argmin}{argmin}
-\DeclareMathOperator*{\argmax}{argmax}
-
 % Abbreviations from CMPPSS:
 
 \newcommand{\eM}     {\mbox{$\epsilon$-machine}\xspace}
@@ -10,7 +7,7 @@
 \newcommand{\eT}     {\mbox{$\epsilon$-transducer}\xspace}
 \newcommand{\eTs}    {\mbox{$\epsilon$-transducers}\xspace}
 \newcommand{\ET}     {\mbox{$\epsilon$-Transducer}\xspace}
-\newcommand{\ETs}    {\mbox{$\epsilon$-Transducers\xspace}}
+\newcommand{\ETs}    {\mbox{$\epsilon$-Transducers}\xspace}
 
 % cryptic
 \newcommand{\order}[1]{order\protect\nobreakdash-$#1$}
@@ -22,11 +19,11 @@
 
 % Processes and sequences
 
-\newcommand{\Process}{\mathcal{P}\xspace}
+\newcommand{\Process}{\ensuremath{\mathcal{P}}}
 
 \newcommand{\ProbMach}{\Prob_{\mathrm{M}}}
 \newcommand{\Lmax}   { {L_{\mathrm{max}}}}
-\newcommand{\MeasAlphabet}      {\mathcal{A}\xspace}
+\newcommand{\MeasAlphabet}      {\ensuremath{\mathcal{A}}}
 % Original symbol
 %\newcommand{\MeasSymbol}   { {S} }
 %\newcommand{\meassymbol}   { {s} }
@@ -86,7 +83,7 @@
 \newcommand{\hmu}               {h_\mu}
 \newcommand{\EE}                {{\bf E}}
 \newcommand{\TI}                {{\bf T}}
-\newcommand{\SI}        {{\bf S}}
+\newcommand{\SyncI}        {{\bf S}}
 \newcommand{\Measurable}{{\bf \mu}}
 
 % Process Crypticity
@@ -343,14 +340,14 @@
                 \AlternateState_{\lastindex{#1}{#2}}]}
 }
 
-\newcommand{\GI}{\varphi}
-\newcommand{\OI}{\zeta}
+\newcommand{\GI}{\ensuremath{\varphi}\xspace}
+\newcommand{\OI}{\ensuremath{\zeta}\xspace}
 % cryptic, gauge, oracular, Markov, and synchronization
-\newcommand{\COrder}{k_{\PC}}
-\newcommand{\GOrder}{k_{\GI}}
-\newcommand{\OOrder}{k_{\OI}}
-\newcommand{\MOrder}{R}
-\newcommand{\SOrder}{k_{\SI}}
+\newcommand{\COrder}{\ensuremath{k_{\PC}}\xspace}
+\newcommand{\GOrder}{\ensuremath{k_{\GI}}\xspace}
+\newcommand{\OOrder}{\ensuremath{k_{\OI}}\xspace}
+\newcommand{\MOrder}{\ensuremath{R}\xspace}
+\newcommand{\SOrder}{\ensuremath{k_{\SI}}\xspace}
 
 
 %% Added to standardize the order of causal states
@@ -398,8 +395,8 @@
 \fi
 
 
-% ******************************************************************************
-% Metric quantities of information generation:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Metric quantities of information generation, eg anatomy of a bit
 
 \newcommand{\metric}[1] {\ensuremath{#1_\mu}\xspace}
 
@@ -413,7 +410,7 @@
 \newcommand{\sigmamu}{\metric{\sigma}}
 
 \newcommand{\himc}{\ensuremath{h_{imc}}\xspace}
-\newcommand{\pee}{\ensuremath{pee}\xspace}
+\newcommand{\pee}{\ensuremath{pee}\xspace} % parallel edge entropy
 
 \newcommand{\ExE}[1] {\ensuremath{\EE_{#1}}\xspace}
 
@@ -424,8 +421,8 @@
 \newcommand{\EI}{\mathbf{I}}
 
 
-% ******************************************************************************
-% Time series:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Time series, using the python-esque notation
 
 \newcommand{\MS} [2] {\ensuremath{\MeasSymbol_{#1:#2}}\xspace}
 \newcommand{\ms} [2] {\ensuremath{\meassymbol_{#1:#2}}\xspace}
@@ -443,33 +440,13 @@
 \newcommand{\lfuture}  [1] {\ms{#1}{}}
 
 
-% ******************************************************************************
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Causal states
 
 \newcommand{\FCS}{\CausalState^\forward\xspace}
 \newcommand{\RCS}{\CausalState^\reverse\xspace}
 
-
-% ******************************************************************************
-% Information theory macros
-
-\newcommand{\op}  [2]   {\ensuremath{\operatorname{#1}\left[#2\right]}\xspace}
-
-\renewcommand{\H} [1]   {\op{H}{#1}}
-\newcommand{\I}   [1]   {\op{I}{#1}}
-\newcommand{\T}   [1]   {\op{T}{#1}}
-\newcommand{\R}   [1]   {\op{R}{#1}}
-\newcommand{\B}   [1]   {\op{B}{#1}}
-\newcommand{\K}   [1]   {\op{K}{#1}}
-
-\newcommand{\meet}      {\curlywedge}
-\newcommand{\join}      {\curlyvee}
-\newcommand{\iless}     {\preceq}
-\newcommand{\imore}     {\succeq}
-\newcommand{\ieq}       {\cong}
-\newcommand{\mss}       {\downrightarrow}
-
-% ******************************************************************************
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Others
 
 \newcommand{\half}{\ensuremath{\nicefrac{1}{2}}}
@@ -477,8 +454,28 @@
 \newcommand{\Language} {\ensuremath{\mathcal{L}}\xspace}
 \newcommand{\Lsync} {\Language_{\mathrm{sync}}\xspace}
 
-\renewcommand{\Process} {\ensuremath{\mathcal{P}}\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mathclap, in case someone doesn't have mathtools
 
-\renewcommand{\eT} {$\acute{\epsilon}$tomata\xspace}
-
-\renewcommand{\MeasAlphabet} {\ensuremath{\Sigma}\xspace}
+% TUGboat, Volume 0 (2001), No. 0
+% http://math.arizona.edu/~aprl/publications/mathclap/perlis_mathclap_24Jun2003.pdf
+% For comparison, here are the existing overlap macros:
+% \def\llap#1{\hbox to 0pt{\hss#1}}
+% \def\rlap#1{\hbox to 0pt{#1\hss}}
+%
+% These are provided by mathtools
+%
+\ifcsname mathclap\endcsname
+  \relax
+\else
+  \def\clap#1{\hbox to 0pt{\hss#1\hss}}
+  \def\mathllap{\mathpalette\mathllapinternal}
+  \def\mathrlap{\mathpalette\mathrlapinternal}
+  \def\mathclap{\mathpalette\mathclapinternal}
+  \def\mathllapinternal#1#2{%
+    \llap{$\mathsurround=0pt#1{#2}$}}
+  \def\mathrlapinternal#1#2{%
+    \rlap{$\mathsurround=0pt#1{#2}$}}
+  \def\mathclapinternal#1#2{%
+    \clap{$\mathsurround=0pt#1{#2}$}}
+\fi

@@ -1,0 +1,245 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% dynlearn.sty
+%
+% A style file for papers by the Crutchfield group
+%
+% This document is broken in to many section, seperated by concept and
+% libraries required.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic imports
+
+% generic stuff
+\usepackage{etex}                        %
+\usepackage{ifpdf}                       % write flexible commands
+\usepackage{xspace}                      % let macros play nice with spaces
+\usepackage{xpunctuate}                  % like xspace, but for punctuation
+\usepackage{xcolor}                      % colors
+\usepackage{setspace}                    %
+
+% figures
+\usepackage[final]{graphicx}             %
+\usepackage[caption=false]{subfig}       % subfigures; caption and subcaption
+                                         % are incompatible with revtex4.1
+
+% formatting of particular things
+\usepackage[final,pagebackref]{hyperref} %
+\usepackage{url}                         % format URLs
+\usepackage[super]{nth}                  % 1st, 2nd, etc
+\usepackage{contour}                     % draw an outline around text
+\usepackage{verbatim}                    %
+
+% math formating, fonts, and symbols
+\usepackage{amsmath}                     %
+\usepackage{amscd}                       %
+\usepackage{amsfonts}                    %
+\usepackage{amssymb}                     %
+\usepackage{amsthm}                      %
+\usepackage{bm}                          % bold
+\usepackage{bbm}                         % more bold
+\usepackage{braket}				% bras and kets for quantum
+\usepackage{mathtools}                   % mathclap, etc
+\usepackage{etoolbox}                    %
+\usepackage{textcomp}                    %
+\usepackage{stmaryrd}                    % some computer science symbols
+\usepackage{nicefrac}                    % pretty fractions
+\usepackage[binary-units]{siunitx}       % format units including bits
+
+% generic packages for nicer fonts
+\usepackage[T1]{fontenc}                 % allow copy/paste of unicode
+\usepackage{lmodern}                     % nicer looking font
+\usepackage[scaled=0.72]{beramono}       % more nicer fonts
+\usepackage{microtype}                   % friendlier word spacing
+
+% format algorithms in pseudocode
+\usepackage{algorithm}                   %
+\usepackage{algorithmicx}                % algorithmic doesn't work with revtex
+
+% better tables
+\usepackage{booktabs}                    % nicer tables
+\usepackage{dcolumn}                     % align by decimal in tables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fixme: put todos and such in the document
+
+\usepackage[inline,nomargin,author=]{fixme}
+
+\makeatletter
+\def\@lox@prtc{\section*{\@fxlistfixmename}\begingroup\def\@dotsep{4.5}}
+\def\@lox@psttc{\endgroup}
+\makeatother
+
+\fxsetup{theme=color,mode=multiuser}
+\fxsetface{inline}{\bfseries}
+
+% different authors
+\definecolor{ryan}{RGB}{64, 0, 128}
+
+\FXRegisterAuthor{jpc}{ajpc}{JPC}
+\FXRegisterAuthor{rgj}{argj}{\color{ryan}RGJ}
+\FXRegisterAuthor{jrm}{ajrm}{JRM}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% foreign stuff, stolen from (and not included because of build systems)
+% \usepackage[abbreviations]{foreign}
+
+\DeclareRobustCommand\eg{\xperiodcommaafter{\textit{e.g}}}
+\DeclareRobustCommand\ie{\xperiodcommaafter{\textit{i.e}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% cmvec setup
+
+% \usepackage{cmvec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% epigraph setup
+
+\usepackage{epigraph}
+
+\renewcommand{\epigraphflush}{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TikZ related imports
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{external}
+\usetikzlibrary{intersections}
+\usetikzlibrary{patterns}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{positioning}
+\usetikzlibrary{through}
+
+\pgfkeys{/pgf/images/include external/.code=\includegraphics{#1}}
+
+%% Externalization of TikZ images
+% Uncomment to enable:
+
+\tikzexternalize
+\tikzsetexternalprefix{tikz_cache/}
+
+%% e-Machine style and supporting code
+\input{vaucanson.tikz}
+
+%% I-Diagram stuff
+\input{idiagrams.tikz}
+
+%%% pgfplots
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{units}
+\pgfplotsset{compat=newest}
+
+%% Dynamically add plot labels to the legend, commented out because it is
+%% incompatible with the standard legend code. Useful in Beamer talks.
+
+% \pgfplotsset{
+%     legend entry/.initial=,
+%     every axis plot post/.code={%
+%         \pgfkeysgetvalue{/pgfplots/legend entry}\tempValue
+%         \ifx\tempValue\empty
+%             \pgfkeysalso{/pgfplots/forget plot}%
+%         \else
+%             \expandafter\addlegendentry\expandafter{\tempValue}%
+%         \fi
+%     },
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+
+\colorlet {past_color}    {red}
+\colorlet {pres_color}    {blue}
+\colorlet {futu_color}    {black!30!green}
+
+\colorlet {temp_color_1}  {red!50!blue}
+\colorlet {temp_color_2}  {red!50!green}
+\colorlet {temp_color_3}  {blue!50!green}
+
+\colorlet {hmu_color}     {blue!67!green}
+\colorlet {rhomu_color}   {temp_color_1!80!blue}
+\colorlet {rmu_color}     {blue}
+\colorlet {bmu_1_color}   {temp_color_1}
+\colorlet {bmu_2_color}   {temp_color_3}
+\colorlet {qmu_color}     {temp_color_1!67!green}
+\colorlet {wmu_color}     {temp_color_2!57!blue}
+\colorlet {sigmamu_color} {temp_color_2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used for code samples
+
+\usepackage{listings}
+\lstdefinestyle{mypython}{
+language=Python,                        % Code langugage
+basicstyle=\small\ttfamily,             % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{green!50!black},    % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{gray!10},        % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=b,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+morekeywords={as},                      % Additional keywords
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Various theorem styles
+
+\theoremstyle{plain}    \newtheorem{Lem}{Lemma}
+\theoremstyle{plain}    \newtheorem*{ProLem}{Proof}
+\theoremstyle{plain}    \newtheorem{Cor}{Corollary}
+\theoremstyle{plain}    \newtheorem*{ProCor}{Proof}
+\theoremstyle{plain}    \newtheorem{The}{Theorem}
+\theoremstyle{plain}    \newtheorem*{ProThe}{Proof}
+\theoremstyle{plain}    \newtheorem{Prop}{Proposition}
+\theoremstyle{plain}    \newtheorem*{ProProp}{Proof}
+\theoremstyle{plain}    \newtheorem*{Conj}{Conjecture}
+\theoremstyle{plain}    \newtheorem*{Rem}{Remark}
+\theoremstyle{plain}    \newtheorem{Def}{Definition}
+\theoremstyle{plain}    \newtheorem*{Not}{Notation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configure cleveref
+
+\usepackage[capitalise]{cleveref}        % Automatically label references
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Finally, computational mechanics and information theory macros
+
+\input{cmechabbrev}
+\input{infotheory}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Uncomment to list package versions:
+
+% \listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document configuration
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt plus 2pt minus 2pt}
+
+\hypersetup{
+  colorlinks,
+  linkcolor={blue!50!black},
+  citecolor={blue!50!black},
+  urlcolor={blue!80!black},
+}
+
+% working paper commands
+\newcommand{\arxiv}[1]{\href{http://arxiv.org/abs/#1}{\texttt{arXiv}:#1}}
+% SFI working papers do not have friendly URLs:
+\newcommand{\sfiwp}[1]{Santa Fe Institute Working Paper #1}
