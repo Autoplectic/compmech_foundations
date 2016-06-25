@@ -1,6 +1,6 @@
 % stuff
 
-\documentclass[draft,prl,nofootinbib,twocolumn,showpacs,groupaddress,preprintnumbers,floatfix]{revtex4-1}
+\documentclass[prl,twocolumn,showpacs,superscriptaddress,preprintnumbers,floatfix]{revtex4-1}
 
 \usepackage{dynlearn}
 
@@ -91,7 +91,7 @@ University of California at Davis, One Shields Avenue, Davis, CA 95616}
 
 \setstretch{1.1}
 
-\listoffixmes
+
 
 \section{Introduction}
 \label{sec:introduction}
@@ -103,23 +103,46 @@ Our development proceeds as follows. We first develop the theory of computationa
 \section{Definitions}
 \label{sec:definitions}
 
-\rgjnote{define alphabet}
-\rgjnote{define process}
-\rgjnote{define stationarity}
-\rgjnote{define ergodicity}
-\rgjnote{define future morph}
-\rgjnote{define past morph}
-\rgjnote{define state morph}
-\rgjnote{define atoms?}
-\rgjnote{define transient, recurrent states}
-\rgjnote{define \eM}
-\rgjnote{define \etomata}
-\rgjnote{define markovity}
-\rgjnote{define cryptic order}
-\rgjnote{define alphabet}
+Things to define:
+\begin{itemize}
+  \item alphabet
+  \item process
+  \item stationarity, ergodicity
+  \item future morphs
+  \item past morphs
+  \item finite-length morphs?
+  \item atoms
+  \item finite processes (future morphs are finite)
+  \item semi-finite processes (future morphs are infinite)
+  \item markovian processes
+  \item \eM
+  \item \etomata
+  \item atomic presentation
+\end{itemize}
 
-\rgjnote{define time reversal}
-\rgjnote{define mixed state (determinization)}
+Things to prove:
+\begin{itemize}
+  \item markovian processes are a proper subset of finite processes
+  \item infinite finite-length future morphs implies infinite past morphs
+  \item the above is equivalent to infinite transient states implies infinite
+    atoms
+  \item which is the same as infinite transients implies infinite reverse \eM
+  \item the weighted state edge entropy of an atomic presentation is \hmu
+  \item if a presentation is atomic, then the mixed state algorithm applied to
+    it will produce the \eM
+  \item the \eM is the presentation whose state morphs are the process's future
+    morphs
+  \item the \etomata is the presentation whose state morphs are the process's atoms
+  \item spectral tools only work on finite processes
+  \item the Brzozowski algorithm constructs the \eM from any HMM.
+\end{itemize}
+
+Things to discuss:
+\begin{itemize}
+  \item the distinction between finite and semi-finite doesn't exist with
+    regular languages, since the distinction between a finite and an infinite
+    word doesn't exist.
+\end{itemize}
 
 Informally, a process is a sequence of random variables drawn from an alphabet
 \MeasAlphabet. More formally, a \emph{process} \Process is a tuple $(\mathbf{X},
@@ -139,24 +162,6 @@ $\ms{-t}{0}^{-1}\Process = \Prob(\Future | \MS{-t}{0} = \ms{-t}{0})$.
   \begin{align}
     \eM      &= \MSP(\TR(\MSP(\TR(R)))) \\
     \etomata &= \TR(\MSP(\TR(R)))
-  \end{align}
-\end{Prop}
-
-\begin{Prop}
-  If $\mathcal{M}$ is atomic, then:
-  \begin{align}
-    \eM = \MSP(\mathcal{M})
-  \end{align}
-\end{Prop}
-
-\begin{Prop}
-  Define
-  \begin{align}
-    \H{i} = \H{ \left\{ p \mid \forall (i \xrightarrow{p:s} j) \in \mathcal{M} \right\} }
-  \end{align}
-  then, for atomic $\mathcal{M}$
-  \begin{align}
-    \hmu = \sum_{s \in \mathcal{M}} \pi_s \H{s}
   \end{align}
 \end{Prop}
 
